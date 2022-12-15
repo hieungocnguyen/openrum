@@ -13,7 +13,7 @@ const Create = () => {
             className="w-full p-4 bg-lime-100 dark:bg-zinc-700"
             placeholder="Write content here..."
          ></textarea>
-         <input type="file" />
+         {/* <input type="file" /> */}
          <button>Upload</button>
       </Layout>
    );

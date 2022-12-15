@@ -11,6 +11,7 @@ const PostSchema = new mongoose.Schema(
          require: true,
       },
       category: { type: String, required: true },
+      author: { type: String, require: true },
    },
    {
       timestamps: true,
