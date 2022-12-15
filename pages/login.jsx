@@ -1,14 +1,22 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
 
 const Login = () => {
+   const { state, dispatch } = useContext(Store);
+   const { userInfo } = state;
+
    const {
       handleSubmit,
       control,
       register,
       formState: { errors },
    } = useForm();
+   const router = useRouter();
 
    const submitHandler = async ({ email, password }) => {
       try {
@@ -16,9 +24,11 @@ const Login = () => {
             email,
             password,
          });
-         console.log(data);
+         Cookies.set("userInfo", JSON.stringify(data));
+         dispatch({ type: "USER_LOGIN", payload: data });
+         router.push("/");
       } catch (err) {
-         console.log("loi");
+         console.log(err);
       }
    };
    return (

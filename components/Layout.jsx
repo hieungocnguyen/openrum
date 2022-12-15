@@ -6,16 +6,31 @@ import {
    HiOutlineMoon,
    HiOutlineInformationCircle,
    HiOutlineLogin,
+   HiUserCircle,
+   HiLogout,
 } from "react-icons/hi";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Store } from "../utils/Store";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Layout = ({ children }) => {
    const { theme, setTheme } = useTheme();
    const [mounted, setMounted] = useState(false);
+   const { state, dispatch } = useContext(Store);
+   const { userInfo } = state;
+   const router = useRouter();
+
    useEffect(() => setMounted(true), []);
    if (!mounted) return null;
+
+   const logoutClickHandler = () => {
+      dispatch({ type: "USER_LOGOUT" });
+      Cookies.remove("userInfo");
+      router.push("/");
+   };
 
    return (
       <div className="grid grid-cols-12">
@@ -57,11 +72,20 @@ const Layout = ({ children }) => {
                         <HiOutlineInformationCircle />
                      </div>
                   </Link>
-                  <Link href={`/login`}>
-                     <div className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4">
-                        <HiOutlineLogin />
+                  {userInfo ? (
+                     <div
+                        className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4"
+                        onClick={logoutClickHandler}
+                     >
+                        <HiLogout />
                      </div>
-                  </Link>
+                  ) : (
+                     <Link href={`/login`}>
+                        <div className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4">
+                           <HiOutlineLogin />
+                        </div>
+                     </Link>
+                  )}
                </div>
             </div>
          </div>
