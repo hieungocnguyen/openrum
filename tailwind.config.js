@@ -4,8 +4,16 @@ module.exports = {
       "./pages/**/*.{js,ts,jsx,tsx}",
       "./components/**/*.{js,ts,jsx,tsx}",
    ],
+   darkMode: "class",
    theme: {
-      extend: {},
+      extend: {
+         colors: {
+            "light-primary": "#DBFC3C",
+            "dark-primary": "#171717",
+            "dark-bg": "#2C2B2B",
+            "secondary-pink": "#FFBCE5",
+         },
+      },
    },
-   plugins: [],
+   plugins: [require("@tailwindcss/line-clamp")],
 };
