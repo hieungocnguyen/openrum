@@ -1,17 +1,16 @@
-import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import CategoriesNavigation from "../components/Categories";
-import Layout from "../components/Layout";
-import Post from "../models/Post";
-import dbConnect from "../utils/dbConnect";
+import CategoriesNavigation from "../../components/Categories";
+import Layout from "../../components/Layout";
+import dbConnect from "../../utils/dbConnect";
+import Post from "../../models/Post";
+const utf8 = require("utf8");
 
-export default function Home(props) {
+const PostofCategory = (props) => {
    const { posts } = props;
+
    return (
       <Layout>
          <CategoriesNavigation />
-         {/* posts */}
          <div className="grid grid-cols-3 gap-4 mt-4">
             {posts.map((p) => (
                <div key={p._id}>
@@ -31,11 +30,16 @@ export default function Home(props) {
          </div>
       </Layout>
    );
-}
+};
 
-export async function getServerSideProps() {
+export default PostofCategory;
+
+export async function getServerSideProps(context) {
+   const { params } = context;
+   const { slug } = params;
+
    await dbConnect.connect();
-   const data = await Post.find({}).lean();
+   const data = await Post.find({ category: slug }).lean();
    await dbConnect.disconnect();
    return {
       props: {

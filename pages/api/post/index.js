@@ -18,7 +18,7 @@ handler.post(async (req, res) => {
       subject: req.body.subject,
       content: req.body.content,
       category: "sample category",
-      author: "sample category",
+      author: "sample author",
    });
    const post = await newPost.save();
    await dbConnect.disconnect();
