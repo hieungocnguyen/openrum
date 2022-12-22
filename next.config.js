@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   reactStrictMode: true,
    env: {
       MONGO_URI:
          "mongodb+srv://ngnohieu:Ngochieu2001@openrum-cluster.g78dq0g.mongodb.net/?retryWrites=true&w=majority",

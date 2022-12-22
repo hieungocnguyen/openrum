@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import nc from "next-connect";
 import Post from "../../../models/Post";
+import User from "../../../models/User";
 import dbConnect from "../../../utils/dbConnect";
+import { isAuth } from "../../../utils/auth";
 
 const handler = nc();
 
@@ -12,13 +14,13 @@ handler.get(async (req, res) => {
    res.send(posts);
 });
 
-handler.post(async (req, res) => {
+handler.use(isAuth).post(async (req, res) => {
    await dbConnect.connect();
    const newPost = new Post({
       subject: req.body.subject,
       content: req.body.content,
-      category: "sample category",
-      author: "sample author",
+      category: req.body.category,
+      author: req.user.name,
    });
    const post = await newPost.save();
    await dbConnect.disconnect();

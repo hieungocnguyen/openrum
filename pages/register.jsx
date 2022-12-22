@@ -3,8 +3,10 @@ import nc from "next-connect";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Register = () => {
+   const router = useRouter();
    const {
       handleSubmit,
       control,
@@ -25,7 +27,7 @@ const Register = () => {
                password,
             }
          );
-         console.log("thanh cong");
+         router.push("/login");
       } catch (err) {
          console.log("loi");
       }

@@ -16,12 +16,19 @@ const Create = () => {
       formState: { errors },
    } = useForm();
 
-   const submitHandler = async ({ subject, content }) => {
+   const submitHandler = async ({ subject, content, category }) => {
       try {
-         const { data } = await axios.post("api/post", {
-            subject,
-            content,
-         });
+         const { data } = await axios.post(
+            "api/post",
+            {
+               subject,
+               content,
+               category,
+            },
+            {
+               headers: { authorization: `Bearer ${userInfo.token}` },
+            }
+         );
          router.push("/");
          console.log(data);
       } catch (err) {
@@ -46,6 +53,19 @@ const Create = () => {
                placeholder="Write content here..."
                {...register("content")}
             ></textarea>
+            <select
+               name="category"
+               id="category"
+               {...register("category")}
+               required
+            >
+               <option value="">Category</option>
+               <option value="Information Technology">
+                  Infomation Technology
+               </option>
+               <option value="Finance & Banking">Finance & Banking</option>
+               <option value="Foreign Languages">Foreign Languages</option>
+            </select>
             {/* <input type="file" /> */}
             <button
                type="submit"

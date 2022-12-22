@@ -8,6 +8,7 @@ import {
    HiOutlineLogin,
    HiUserCircle,
    HiLogout,
+   HiUser,
 } from "react-icons/hi";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -77,7 +78,7 @@ const Layout = ({ children }) => {
                         className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4"
                         onClick={logoutClickHandler}
                      >
-                        <HiLogout />
+                        <HiUser />
                      </div>
                   ) : (
                      <Link href={`/login`}>
