@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -50,7 +51,13 @@ const Search = () => {
                <div key={p._id}>
                   <Link href={`/post/${p._id}`}>
                      <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
-                        <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>
+                        {p.image ? (
+                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center">
+                              <img src={p.image} alt="img" />
+                           </div>
+                        ) : (
+                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>
+                        )}
                         <div className=" mt-2 font-extrabold text-xl line-clamp-2">
                            {p.subject}
                         </div>

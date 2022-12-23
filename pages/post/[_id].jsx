@@ -33,6 +33,9 @@ const DetailPost = (props) => {
    return (
       <Layout>
          <div className="min-h-full bg-white dark:bg-dark-primary background_dropback p-5">
+            <div className="w-full h-60 overflow-hidden rounded-md flex items-center">
+               <img src={post.image} alt="thumbnail" className="w-full" />
+            </div>
             <div className="text-4xl font-extrabold">{post.subject}</div>
             <div className="">{post.author}</div>
             {/* content post */}

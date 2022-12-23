@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ export default function Home(props) {
                   <Link href={`/post/${p._id}`}>
                      <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
                         {p.image ? (
-                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden">
+                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center">
                               <img src={p.image} alt="img" />
                            </div>
                         ) : (

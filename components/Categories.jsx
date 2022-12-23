@@ -6,10 +6,10 @@ const CategoriesNavigation = () => {
    return (
       <div className="grid grid-cols-3 gap-4 ">
          <Link
-            href={`/category/${encodeURIComponent("Infomation Technology")}`}
+            href={`/category/${encodeURIComponent("Information Technology")}`}
          >
             <div className="bg-light-primary background_dropback py-2 text-center font-bold text-lg cursor-pointer light:hover:bg-[#FFBCE5] dark:bg-dark-primary">
-               Infomation Technology
+               Information Technology
             </div>
          </Link>
          <Link href={`/category/${encodeURIComponent("Finance & Banking")}`}>
