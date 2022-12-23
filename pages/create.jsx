@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
@@ -9,27 +9,45 @@ const Create = () => {
    const { state, dispatch } = useContext(Store);
    const { userInfo } = state;
    const router = useRouter();
+   const [selectedImage, setSelectedImage] = useState();
+   let urlImage = "";
    const {
       handleSubmit,
       control,
       register,
       formState: { errors },
    } = useForm();
-
+   const imageChange = (e) => {
+      setSelectedImage(e.target.files[0]);
+   };
    const submitHandler = async ({ subject, content, category }) => {
       try {
+         if (selectedImage) {
+            const resUploadCloudinary = await axios.post(
+               "api/upload",
+               { file: selectedImage },
+               {
+                  headers: {
+                     "Content-Type": "multipart/form-data",
+                  },
+               }
+            );
+            urlImage = resUploadCloudinary.data.url;
+         }
+
          const { data } = await axios.post(
             "api/post",
             {
-               subject,
-               content,
-               category,
+               subject: subject,
+               content: content,
+               category: category,
+               image: urlImage,
             },
             {
                headers: { authorization: `Bearer ${userInfo.token}` },
             }
          );
-         router.push("/");
+         // router.push("/");
          console.log(data);
       } catch (err) {
          console.log(err);
@@ -66,7 +84,7 @@ const Create = () => {
                <option value="Finance & Banking">Finance & Banking</option>
                <option value="Foreign Languages">Foreign Languages</option>
             </select>
-            {/* <input type="file" /> */}
+            <input type="file" onChange={imageChange} />
             <button
                type="submit"
                className="p-4 bg-light-primary dark:bg-dark-primary w-fit"

@@ -21,10 +21,11 @@ handler.use(isAuth).post(async (req, res) => {
       content: req.body.content,
       category: req.body.category,
       author: req.user.name,
+      image: req.body.image,
    });
    const post = await newPost.save();
    await dbConnect.disconnect();
-   res.send({ message: "Post Created", post });
+   res.send({ message: "Post created", post });
 });
 
 export default handler;
