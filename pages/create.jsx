@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
@@ -55,7 +55,7 @@ const Create = () => {
    };
    return (
       <Layout>
-         <div className="font-extrabold text-3xl">Write your post</div>
+         <div className="font-extrabold text-3xl my-4">Write your post</div>
          <form
             className="flex flex-col items-center gap-4"
             onSubmit={handleSubmit(submitHandler)}
@@ -67,24 +67,37 @@ const Create = () => {
                {...register("subject")}
             ></textarea>
             <textarea
+               rows="14"
                className="w-full p-4 bg-lime-100 dark:bg-zinc-700"
                placeholder="Write content here..."
                {...register("content")}
             ></textarea>
-            <select
-               name="category"
-               id="category"
-               {...register("category")}
-               required
-            >
-               <option value="">Category</option>
-               <option value="Information Technology">
-                  Infomation Technology
-               </option>
-               <option value="Finance & Banking">Finance & Banking</option>
-               <option value="Foreign Languages">Foreign Languages</option>
-            </select>
-            <input type="file" onChange={imageChange} />
+            <div className="text-left">
+               <div className="flex gap-6 my-4">
+                  <div className=" font-semibold">Select Category</div>
+                  <select
+                     name="category"
+                     id="category"
+                     {...register("category")}
+                     required
+                  >
+                     <option value="">Category</option>
+                     <option value="Information Technology">
+                        Infomation Technology
+                     </option>
+                     <option value="Finance & Banking">
+                        Finance & Banking
+                     </option>
+                     <option value="Foreign Languages">
+                        Foreign Languages
+                     </option>
+                  </select>
+               </div>
+               <div className="flex gap-6 my-4">
+                  <div className=" font-semibold">Select Thumbnail</div>
+                  <input type="file" onChange={imageChange} required />
+               </div>
+            </div>
             <button
                type="submit"
                className="p-4 bg-light-primary dark:bg-dark-primary w-fit"

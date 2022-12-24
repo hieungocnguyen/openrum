@@ -24,7 +24,7 @@ const Bookmark = () => {
    }, []);
    return (
       <Layout>
-         <div>Your Bookmark</div>
+         <div className="font-extrabold text-3xl my-4">Your Bookmark</div>
          <div className="grid grid-cols-3 gap-4 mt-4">
             {posts.map((p) => (
                <div key={p._id}>

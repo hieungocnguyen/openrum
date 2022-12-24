@@ -40,7 +40,7 @@ const Search = () => {
                onChange={(e) => setKeyWord(e.target.value)}
             />
             <button
-               className="bg-light-primary dark:bg-dark-primary background_dropback col-span-1 text-lg font-semibold"
+               className="bg-light-primary dark:text-black background_dropback col-span-1 font-bold text-lg"
                type="submit"
             >
                Search
@@ -53,7 +53,11 @@ const Search = () => {
                      <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
                         {p.image ? (
                            <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center">
-                              <img src={p.image} alt="img" />
+                              <img
+                                 src={p.image}
+                                 alt="img"
+                                 className="w-full h-full"
+                              />
                            </div>
                         ) : (
                            <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>

@@ -48,11 +48,19 @@ const Layout = ({ children }) => {
                         <HiOutlineSearch />
                      </div>
                   </Link>
-                  <Link href={`/create`}>
-                     <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
-                        <HiOutlinePencilAlt />
-                     </div>
-                  </Link>
+                  {userInfo ? (
+                     <Link href={`/create`}>
+                        <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
+                           <HiOutlinePencilAlt />
+                        </div>
+                     </Link>
+                  ) : (
+                     <Link href={`/login`}>
+                        <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
+                           <HiOutlinePencilAlt />
+                        </div>
+                     </Link>
+                  )}
                   <Link href={`/bookmark`}>
                      <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
                         <HiOutlineBookmark />

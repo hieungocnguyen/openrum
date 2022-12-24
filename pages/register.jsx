@@ -4,6 +4,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { HiOutlineArrowSmLeft, HiOutlineHome } from "react-icons/hi";
 
 const Register = () => {
    const router = useRouter();
@@ -35,16 +36,25 @@ const Register = () => {
 
    return (
       <div>
-         <div className="text-center">
+         <div className="flex justify-center gap-4 my-4">
             <Link href={`login`}>
-               <div>Back to log in page</div>
+               <div className="text-black p-2 bg-light-primary rounded-lg text-xl">
+                  <HiOutlineArrowSmLeft />
+               </div>
             </Link>
             <Link href={`/`}>
-               <div>Back to home page</div>
+               <div className="text-black p-2 bg-light-primary rounded-lg text-xl">
+                  <HiOutlineHome />
+               </div>
             </Link>
          </div>
          <div className="flex flex-col items-center my-4">
-            <div>Register</div>
+            <div
+               className="text-2xl font-semibold
+            my-4"
+            >
+               Register
+            </div>
             <form
                className="lg:w-1/3 sm:w-2/3 mx-auto"
                onSubmit={handleSubmit(submitHandler)}

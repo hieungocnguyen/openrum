@@ -19,8 +19,12 @@ export default function Home(props) {
                   <Link href={`/post/${p._id}`}>
                      <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
                         {p.image ? (
-                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center">
-                              <img src={p.image} alt="img" />
+                           <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center ">
+                              <img
+                                 src={p.image}
+                                 alt="img"
+                                 className="w-full h-full"
+                              />
                            </div>
                         ) : (
                            <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>
@@ -29,7 +33,7 @@ export default function Home(props) {
                         <div className=" mt-2 font-extrabold text-xl line-clamp-2">
                            {p.subject}
                         </div>
-                        <div className=" mt-2 font-normal text-lg">
+                        <div className=" absolute bottom-2 text-lg">
                            {p.author}
                         </div>
                      </div>
