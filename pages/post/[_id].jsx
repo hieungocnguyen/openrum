@@ -29,6 +29,7 @@ const DetailPost = (props) => {
                }
             );
             setIsBookmark(true);
+            fetchUserBookmark();
          } catch (error) {
             console.log(error);
          }
@@ -48,6 +49,7 @@ const DetailPost = (props) => {
             }
          );
          setIsBookmark(false);
+         fetchUserBookmark();
       } catch (error) {
          console.log(error);
       }
@@ -72,7 +74,7 @@ const DetailPost = (props) => {
          fetchUserBookmark();
       }
       fetchPost();
-   }, [isBookmark]);
+   }, []);
 
    return (
       <Layout>

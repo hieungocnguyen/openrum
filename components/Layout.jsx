@@ -61,11 +61,19 @@ const Layout = ({ children }) => {
                         </div>
                      </Link>
                   )}
-                  <Link href={`/bookmark`}>
-                     <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
-                        <HiOutlineBookmark />
-                     </div>
-                  </Link>
+                  {userInfo ? (
+                     <Link href={`/bookmark`}>
+                        <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
+                           <HiOutlineBookmark />
+                        </div>
+                     </Link>
+                  ) : (
+                     <Link href={`/login`}>
+                        <div className="p-2 rounded-lg cursor-pointer hover:bg-secondary-pink dark:hover:bg-gray-600">
+                           <HiOutlineBookmark />
+                        </div>
+                     </Link>
+                  )}
                </div>
                <div className="text-3xl flex flex-col gap-2 dark:text-light-primary">
                   <div

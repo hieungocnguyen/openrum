@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "@ckeditor/ckeditor5-build-classic";
+import dynamic from "next/dynamic";
 
 const Create = () => {
    const { state, dispatch } = useContext(Store);
@@ -76,7 +77,6 @@ const Create = () => {
                   onChange={(event, editor) => {
                      const data = editor.getData();
                      setContent(data);
-                     console.log({ event, editor, data });
                   }}
                />
             </div>
@@ -123,4 +123,5 @@ const Create = () => {
    );
 };
 
-export default Create;
+// export default Create;
+export default dynamic(() => Promise.resolve(Create), { ssr: false });
