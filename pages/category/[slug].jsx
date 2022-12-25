@@ -19,7 +19,11 @@ const PostofCategory = (props) => {
                      <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
                         {p.image ? (
                            <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center">
-                              <img src={p.image} alt="img" />
+                              <img
+                                 src={p.image}
+                                 alt="img"
+                                 className="h-full w-full"
+                              />
                            </div>
                         ) : (
                            <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { Store } from "../../utils/Store";
+import dynamic from "next/dynamic";
 
 const DetailPost = (props) => {
    const { post } = props;
@@ -14,6 +15,7 @@ const DetailPost = (props) => {
    const { state, dispatch } = useContext(Store);
    const { userInfo } = state;
    const [isBookmark, setIsBookmark] = useState(false);
+   const [content, setContent] = useState("");
    const SubmitBookMark = async () => {
       if (userInfo) {
          try {
@@ -60,10 +62,16 @@ const DetailPost = (props) => {
          }
       });
    };
+   const fetchPost = async () => {
+      const { data } = await axios.get(`/api/post/${_id}`);
+      setContent(data.content);
+   };
+
    useEffect(() => {
       if (userInfo) {
          fetchUserBookmark();
       }
+      fetchPost();
    }, [isBookmark]);
 
    return (
@@ -72,27 +80,31 @@ const DetailPost = (props) => {
             <div className="w-full h-60 overflow-hidden rounded-md flex items-center">
                <img src={post.image} alt="thumbnail" className="w-full" />
             </div>
-            <div className="mx-4">
+            <div className="mx-4 ">
                <div className="text-4xl font-extrabold my-4">
                   {post.subject}
                </div>
                <div className="my-2">{post.author}</div>
                {/* content post */}
-               <div>{post.content}</div>
+               <div dangerouslySetInnerHTML={{ __html: `${content}` }} />
                {isBookmark ? (
-                  <button
-                     className="text-4xl text-light-primary"
-                     onClick={SubmitRemoveBookMark}
-                  >
-                     <HiBookmark />
-                  </button>
+                  <div className="absolute bottom-2 left-1/2">
+                     <button
+                        className="text-4xl text-light-primary mt-8"
+                        onClick={SubmitRemoveBookMark}
+                     >
+                        <HiBookmark />
+                     </button>
+                  </div>
                ) : (
-                  <button
-                     className="text-4xl text-light-primary"
-                     onClick={SubmitBookMark}
-                  >
-                     <HiOutlineBookmark />
-                  </button>
+                  <div className="absolute bottom-2 left-1/2">
+                     <button
+                        className="text-4xl text-light-primary mt-8"
+                        onClick={SubmitBookMark}
+                     >
+                        <HiOutlineBookmark />
+                     </button>
+                  </div>
                )}
             </div>
          </div>
@@ -115,3 +127,4 @@ export async function getServerSideProps(context) {
       },
    };
 }
+// export default dynamic(() => Promise.resolve(DetailPost), { ssr: false });

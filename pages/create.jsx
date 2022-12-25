@@ -4,12 +4,15 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import Editor from "@ckeditor/ckeditor5-build-classic";
 
 const Create = () => {
    const { state, dispatch } = useContext(Store);
    const { userInfo } = state;
    const router = useRouter();
    const [selectedImage, setSelectedImage] = useState();
+   const [content, setContent] = useState("");
    let urlImage = "";
    const {
       handleSubmit,
@@ -20,7 +23,7 @@ const Create = () => {
    const imageChange = (e) => {
       setSelectedImage(e.target.files[0]);
    };
-   const submitHandler = async ({ subject, content, category }) => {
+   const submitHandler = async ({ subject, category }) => {
       try {
          if (selectedImage) {
             const resUploadCloudinary = await axios.post(
@@ -47,7 +50,7 @@ const Create = () => {
                headers: { authorization: `Bearer ${userInfo.token}` },
             }
          );
-         // router.push("/");
+         router.push("/");
          console.log(data);
       } catch (err) {
          console.log(err);
@@ -66,12 +69,23 @@ const Create = () => {
                placeholder="Subject..."
                {...register("subject")}
             ></textarea>
-            <textarea
+            <div className="App text-black w-full">
+               <CKEditor
+                  editor={Editor}
+                  data="<p></p>"
+                  onChange={(event, editor) => {
+                     const data = editor.getData();
+                     setContent(data);
+                     console.log({ event, editor, data });
+                  }}
+               />
+            </div>
+            {/* <textarea
                rows="14"
                className="w-full p-4 bg-lime-100 dark:bg-zinc-700"
                placeholder="Write content here..."
                {...register("content")}
-            ></textarea>
+            ></textarea> */}
             <div className="text-left">
                <div className="flex gap-6 my-4">
                   <div className=" font-semibold">Select Category</div>
