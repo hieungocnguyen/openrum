@@ -9,6 +9,9 @@ import {
    HiUserCircle,
    HiLogout,
    HiUser,
+   HiOutlineLogout,
+   HiCollection,
+   HiOutlineCollection,
 } from "react-icons/hi";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -90,11 +93,18 @@ const Layout = ({ children }) => {
                      </div>
                   </Link>
                   {userInfo ? (
-                     <div
-                        className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4"
-                        onClick={logoutClickHandler}
-                     >
-                        <HiUser />
+                     <div className="">
+                        <Link href={"/yourpost"}>
+                           <div className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600">
+                              <HiOutlineCollection />
+                           </div>
+                        </Link>
+                        <div
+                           className=" p-2 hover:bg-secondary-pink rounded-lg cursor-pointer  dark:hover:bg-gray-600 mt-4"
+                           onClick={logoutClickHandler}
+                        >
+                           <HiOutlineLogout />
+                        </div>
                      </div>
                   ) : (
                      <Link href={`/login`}>

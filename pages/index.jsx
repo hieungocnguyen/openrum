@@ -33,8 +33,11 @@ export default function Home(props) {
                         <div className=" mt-2 font-extrabold text-xl line-clamp-2">
                            {p.subject}
                         </div>
-                        <div className=" absolute bottom-2 text-lg">
-                           {p.author}
+                        <div className="absolute bottom-2 ">
+                           {p.author} |{" "}
+                           <span className="dark:text-light-primary text-black ">
+                              {p.category}
+                           </span>
                         </div>
                      </div>
                   </Link>
@@ -51,7 +54,7 @@ export async function getServerSideProps() {
    await dbConnect.disconnect();
    return {
       props: {
-         posts: data.map(dbConnect.convertDocToObj),
+         posts: JSON.parse(JSON.stringify(data)),
       },
    };
 }

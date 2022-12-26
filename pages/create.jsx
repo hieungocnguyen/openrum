@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/Layout";
+import Editor from "../components/Editor";
 import { Store } from "../utils/Store";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import Editor from "@ckeditor/ckeditor5-build-classic";
-import dynamic from "next/dynamic";
 
 const Create = () => {
    const { state, dispatch } = useContext(Store);
@@ -15,6 +13,7 @@ const Create = () => {
    const [selectedImage, setSelectedImage] = useState();
    const [content, setContent] = useState("");
    let urlImage = "";
+   const [data, setData] = useState("");
    const {
       handleSubmit,
       control,
@@ -57,6 +56,7 @@ const Create = () => {
          console.log(err);
       }
    };
+
    return (
       <Layout>
          <div className="font-extrabold text-3xl my-4">Write your post</div>
@@ -70,16 +70,30 @@ const Create = () => {
                placeholder="Subject..."
                {...register("subject")}
             ></textarea>
-            <div className="App text-black w-full">
-               <CKEditor
-                  editor={Editor}
-                  data="<p></p>"
-                  onChange={(event, editor) => {
-                     const data = editor.getData();
-                     setContent(data);
+            <div className="App w-full text-black">
+               <Editor
+                  name="description"
+                  onChange={(data) => {
+                     setData(data);
                   }}
                />
             </div>
+            {/* <div className="text-black w-full">
+               {editorLoaded ? (
+                  <CKEditor
+                     type=""
+                     name="description"
+                     editor={Editor}
+                     data="<p></p>"
+                     onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setContent(data);
+                     }}
+                  />
+               ) : (
+                  <div>Editor loading</div>
+               )}
+            </div> */}
             {/* <textarea
                rows="14"
                className="w-full p-4 bg-lime-100 dark:bg-zinc-700"
@@ -123,5 +137,5 @@ const Create = () => {
    );
 };
 
-// export default Create;
-export default dynamic(() => Promise.resolve(Create), { ssr: false });
+export default Create;
+// export default dynamic(() => Promise.resolve(Create), { ssr: false });

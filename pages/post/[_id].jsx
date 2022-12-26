@@ -2,11 +2,12 @@ import Layout from "../../components/Layout";
 import dbConnect from "../../utils/dbConnect";
 import Post from "../../models/Post";
 import { HiBookmark, HiOutlineBookmark } from "react-icons/hi2";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { Store } from "../../utils/Store";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const DetailPost = (props) => {
    const { post } = props;
@@ -16,6 +17,8 @@ const DetailPost = (props) => {
    const { userInfo } = state;
    const [isBookmark, setIsBookmark] = useState(false);
    const [content, setContent] = useState("");
+   const [reviews, setReviews] = useState([]);
+   const [comment, setComment] = useState("");
    const SubmitBookMark = async () => {
       if (userInfo) {
          try {
@@ -54,6 +57,21 @@ const DetailPost = (props) => {
          console.log(error);
       }
    };
+   const SubmitComment = async (e) => {
+      e.preventDefault();
+      try {
+         const res = await axios.post(
+            `/api/post/${_id}/review`,
+            { comment: comment },
+            {
+               headers: { authorization: `Bearer ${userInfo.token}` },
+            }
+         );
+         fetchPost();
+      } catch (error) {
+         console.log(error);
+      }
+   };
    const fetchUserBookmark = async () => {
       const { data } = await axios.get("http://localhost:3000/api/user", {
          headers: { authorization: `Bearer ${userInfo.token}` },
@@ -67,6 +85,8 @@ const DetailPost = (props) => {
    const fetchPost = async () => {
       const { data } = await axios.get(`/api/post/${_id}`);
       setContent(data.content);
+      setReviews(data.reviews);
+      console.log(data.reviews);
    };
 
    useEffect(() => {
@@ -89,6 +109,45 @@ const DetailPost = (props) => {
                <div className="my-2">{post.author}</div>
                {/* content post */}
                <div dangerouslySetInnerHTML={{ __html: `${content}` }} />
+
+               {/* comment */}
+               <div>
+                  <div className="my-4 text-xl font-semibold">Comment</div>
+                  {userInfo ? (
+                     <div>
+                        <form
+                           onSubmit={SubmitComment}
+                           className="grid grid-cols-5 mb-4"
+                        >
+                           <input
+                              type="text"
+                              required
+                              onChange={(e) => setComment(e.target.value)}
+                              className="p-2 col-span-4 rounded-l-lg"
+                           />
+                           <button
+                              type="submit"
+                              className="col-span-1 bg-light-primary text-black rounded-r-lg font-semibold"
+                           >
+                              Send
+                           </button>
+                        </form>
+                     </div>
+                  ) : (
+                     <div>
+                        <Link href={"/login"}>
+                           <span className="text-light-primary">Log in</span>
+                        </Link>{" "}
+                        to comment
+                     </div>
+                  )}
+                  {reviews.map((r) => (
+                     <div key={r._id} className="flex gap-2 mt-4 ml-4">
+                        <div className="font-semibold">{r.name}:</div>
+                        <div>{r.comment}</div>
+                     </div>
+                  ))}
+               </div>
                {isBookmark ? (
                   <div className="absolute bottom-2 left-1/2">
                      <button
@@ -99,7 +158,7 @@ const DetailPost = (props) => {
                      </button>
                   </div>
                ) : (
-                  <div className="absolute bottom-2 left-1/2">
+                  <div className="flex justify-center">
                      <button
                         className="text-4xl text-light-primary mt-8"
                         onClick={SubmitBookMark}
@@ -125,7 +184,7 @@ export async function getServerSideProps(context) {
    await dbConnect.disconnect();
    return {
       props: {
-         post: dbConnect.convertDocToObj(post),
+         post: JSON.parse(JSON.stringify(post)),
       },
    };
 }
