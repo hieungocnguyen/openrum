@@ -13,7 +13,6 @@ const Create = () => {
    const [selectedImage, setSelectedImage] = useState();
    const [content, setContent] = useState("");
    let urlImage = "";
-   const [data, setData] = useState("");
    const {
       handleSubmit,
       control,
@@ -74,7 +73,7 @@ const Create = () => {
                <Editor
                   name="description"
                   onChange={(data) => {
-                     setData(data);
+                     setContent(data);
                   }}
                />
             </div>
