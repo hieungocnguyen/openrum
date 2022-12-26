@@ -71,7 +71,6 @@ const Create = () => {
             ></textarea>
             <div className="App w-full text-black">
                <Editor
-                  name="description"
                   onChange={(data) => {
                      setContent(data);
                   }}

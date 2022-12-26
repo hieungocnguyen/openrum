@@ -106,12 +106,31 @@ const DetailPost = (props) => {
                <div className="text-4xl font-extrabold my-4">
                   {post.subject}
                </div>
-               <div className="my-2">{post.author}</div>
+               <div className="my-2">{post.authorName}</div>
                {/* content post */}
                <div dangerouslySetInnerHTML={{ __html: `${content}` }} />
 
                {/* comment */}
                <div>
+                  {isBookmark ? (
+                     <div className="flex justify-center">
+                        <button
+                           className="text-4xl text-light-primary mt-8"
+                           onClick={SubmitRemoveBookMark}
+                        >
+                           <HiBookmark />
+                        </button>
+                     </div>
+                  ) : (
+                     <div className="flex justify-center">
+                        <button
+                           className="text-4xl text-light-primary mt-8"
+                           onClick={SubmitBookMark}
+                        >
+                           <HiOutlineBookmark />
+                        </button>
+                     </div>
+                  )}
                   <div className="my-4 text-xl font-semibold">Comment</div>
                   {userInfo ? (
                      <div>
@@ -123,7 +142,7 @@ const DetailPost = (props) => {
                               type="text"
                               required
                               onChange={(e) => setComment(e.target.value)}
-                              className="p-2 col-span-4 rounded-l-lg"
+                              className="py-3 px-5 col-span-4 rounded-l-lg outline-none"
                            />
                            <button
                               type="submit"
@@ -148,25 +167,6 @@ const DetailPost = (props) => {
                      </div>
                   ))}
                </div>
-               {isBookmark ? (
-                  <div className="absolute bottom-2 left-1/2">
-                     <button
-                        className="text-4xl text-light-primary mt-8"
-                        onClick={SubmitRemoveBookMark}
-                     >
-                        <HiBookmark />
-                     </button>
-                  </div>
-               ) : (
-                  <div className="flex justify-center">
-                     <button
-                        className="text-4xl text-light-primary mt-8"
-                        onClick={SubmitBookMark}
-                     >
-                        <HiOutlineBookmark />
-                     </button>
-                  </div>
-               )}
             </div>
          </div>
       </Layout>

@@ -20,7 +20,12 @@ handler.use(isAuth).post(async (req, res) => {
       subject: req.body.subject,
       content: req.body.content,
       category: req.body.category,
-      author: req.user.name,
+      // author: {
+      //    name: req.user.name,
+      //    user: req.user._id,
+      // },
+      authorID: req.user._id,
+      authorName: req.user.name,
       image: req.body.image,
    });
    const post = await newPost.save();
