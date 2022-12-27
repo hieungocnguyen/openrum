@@ -1,9 +1,12 @@
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
 
 function Editor({ onChange, name, value }) {
    const editorRef = useRef();
    const { CKEditor, ClassicEditor } = editorRef.current || {};
    const [editorLoaded, setEditorLoaded] = useState(false);
+   const router = useRouter();
 
    useEffect(() => {
       try {
@@ -12,8 +15,11 @@ function Editor({ onChange, name, value }) {
             ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
          };
          setEditorLoaded(true);
-      } catch (err) {}
-   }, []);
+      } catch (err) {
+         router.push("/create");
+      }
+      setEditorLoaded(true);
+   }, [editorLoaded]);
 
    return (
       <div>
@@ -34,4 +40,5 @@ function Editor({ onChange, name, value }) {
    );
 }
 
-export default Editor;
+// export default Editor;
+export default dynamic(() => Promise.resolve(Editor), { ssr: false });

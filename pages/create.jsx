@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import Layout from "../components/Layout";
 import Editor from "../components/Editor";
 import { Store } from "../utils/Store";
+import Loader from "../components/Loader";
+import toast, { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
 
 const Create = () => {
    const { state, dispatch } = useContext(Store);
@@ -13,6 +16,7 @@ const Create = () => {
    const [selectedImage, setSelectedImage] = useState();
    const [content, setContent] = useState("");
    let urlImage = "";
+   const [loading, setLoading] = useState(false);
    const {
       handleSubmit,
       control,
@@ -24,6 +28,7 @@ const Create = () => {
    };
    const submitHandler = async ({ subject, category }) => {
       try {
+         setLoading(true);
          if (selectedImage) {
             const resUploadCloudinary = await axios.post(
                "api/upload",
@@ -51,8 +56,15 @@ const Create = () => {
          );
          router.push("/");
          console.log(data);
+         setLoading(false);
+         toast.success("Done!", {
+            position: "bottom-center",
+         });
       } catch (err) {
-         console.log(err);
+         setLoading(false);
+         toast.error("Done!", {
+            position: "top-center",
+         });
       }
    };
 
@@ -131,9 +143,11 @@ const Create = () => {
                Upload
             </button>
          </form>
+         {loading ? <Loader /> : <></>}
+         <Toaster />
       </Layout>
    );
 };
 
-export default Create;
-// export default dynamic(() => Promise.resolve(Create), { ssr: false });
+// export default Create;
+export default dynamic(() => Promise.resolve(Create), { ssr: false });

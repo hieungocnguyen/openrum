@@ -106,7 +106,9 @@ const DetailPost = (props) => {
                <div className="text-4xl font-extrabold my-4">
                   {post.subject}
                </div>
-               <div className="my-2">{post.authorName}</div>
+               <div className="my-4 dark:text-light-primary text-black">
+                  👉 {post.authorName}
+               </div>
                {/* content post */}
                <div dangerouslySetInnerHTML={{ __html: `${content}` }} />
 
