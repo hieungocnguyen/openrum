@@ -20,8 +20,10 @@ const YourPost = () => {
       setPosts(data);
    };
    const handleDelete = async (PostID) => {
+      console.log("hjbg");
       try {
          const res = await axios.delete(`/api/post/${PostID}`);
+         fetchPosts();
       } catch (err) {
          console.log("Delete Failed");
       }
@@ -38,8 +40,8 @@ const YourPost = () => {
             <div className="grid grid-cols-3 gap-4 mt-4">
                {posts.map((p) => (
                   <div key={p._id}>
-                     <Link href={`/post/${p._id}`}>
-                        <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
+                     <div className="h-80 bg-white dark:bg-dark-primary background_dropback p-4">
+                        <Link href={`/post/${p._id}`}>
                            {p.image ? (
                               <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md overflow-hidden flex items-center ">
                                  <img
@@ -51,23 +53,23 @@ const YourPost = () => {
                            ) : (
                               <div className="bg-pink-300 h-2/3 w-full mx-auto rounded-md"></div>
                            )}
-                           <div className=" mt-2 font-extrabold text-xl line-clamp-2">
-                              {p.subject}
-                           </div>
-                           <div className="absolute bottom-2 ">
-                              {p.authorName} |{" "}
-                              <span className="dark:text-light-primary text-black ">
-                                 {p.category}
-                              </span>
-                           </div>
-                           <div
-                              className="absolute right-2 bottom-2 text-3xl text-red-600 hover:bg-red-800 p-1 rounded-sm"
-                              onClick={handleDelete(p._id)}
-                           >
-                              <HiOutlineTrash />
-                           </div>
+                        </Link>
+                        <div className=" mt-2 font-extrabold text-xl line-clamp-2">
+                           {p.subject}
                         </div>
-                     </Link>
+                        <div className="absolute bottom-2 ">
+                           {p.authorName} |{" "}
+                           <span className="dark:text-light-primary text-black ">
+                              {p.category}
+                           </span>
+                        </div>
+                        <div
+                           className="absolute right-2 bottom-2 text-3xl text-red-600 hover:bg-red-800 p-1 rounded-md cursor-pointer"
+                           onClick={(e) => handleDelete(p._id)}
+                        >
+                           <HiOutlineTrash />
+                        </div>
+                     </div>
                   </div>
                ))}
             </div>

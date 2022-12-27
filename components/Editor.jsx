@@ -19,20 +19,23 @@ function Editor({ onChange, name, value }) {
          router.push("/create");
       }
       setEditorLoaded(true);
-   }, [editorLoaded]);
+   }, [editorLoaded, router]);
 
    return (
       <div>
+         <div className="text-white my-2 font-semibold">Content</div>
          {editorLoaded ? (
-            <CKEditor
-               editor={ClassicEditor}
-               data={value}
-               onChange={(event, editor) => {
-                  //event property make getData() work
-                  const data = editor.getData();
-                  onChange(data);
-               }}
-            />
+            <div>
+               <CKEditor
+                  editor={ClassicEditor}
+                  data={value}
+                  onChange={(event, editor) => {
+                     //event property make getData() work
+                     const data = editor.getData();
+                     onChange(data);
+                  }}
+               />
+            </div>
          ) : (
             <div>Editor loading</div>
          )}

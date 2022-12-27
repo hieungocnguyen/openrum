@@ -67,6 +67,7 @@ const Create = () => {
          });
       }
    };
+   useEffect(() => {}, []);
 
    return (
       <Layout>
