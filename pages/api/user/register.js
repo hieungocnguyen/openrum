@@ -17,9 +17,9 @@ handler.post(async (req, res) => {
    const user = await newUser.save();
    await dbConnect.disconnect();
 
-   const token = signToken(user);
+   // const token = signToken(user);
    res.send({
-      token,
+      // token,
       _id: user._id,
       name: user.name,
       email: user.email,

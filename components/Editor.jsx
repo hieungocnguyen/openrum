@@ -23,7 +23,7 @@ function Editor({ onChange, name, value }) {
 
    return (
       <div>
-         <div className="text-white my-2 font-semibold">Content</div>
+         <div className="black:text-white my-2 font-semibold">Content</div>
          {editorLoaded ? (
             <div>
                <CKEditor
